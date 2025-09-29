@@ -1,60 +1,59 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {
-    "text": "Public Transport Accessibility in Melbourne (Stops by Hub, 2025)",
-    "subtitle": "Base map: Melbourne suburbs • Idiom: proportional symbol map • Projection: Mercator (auto-fit to suburbs)",
-    "anchor": "start"
-  },
+  "width": 1100,
+  "height": 520,
   "config": {
     "background": "white",
-    "view": {"stroke": "transparent"},
-    "legend": {"title": "Stops (count)"}
+    "view": { "stroke": "transparent" },
+    "legend": { "titleColor": "#0f172a", "labelColor": "#0f172a" }
   },
-  "width": 960,
-  "height": 600,
-  "projection": {"type": "mercator"},
+
+  "projection": { "type": "equalEarth" },
+
   "layer": [
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json",
-        "format": {"type": "geojson"}
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#f0f4f8",
-        "stroke": "#999",
-        "strokeWidth": 0.5
-      },
-      "encoding": {
-        "shape": {"field": "geometry", "type": "geojson"}
-      }
+      "data": { "graticule": { "step": [20, 20] } },
+      "mark": { "type": "geoshape", "stroke": "#6b84a3", "strokeWidth": 1, "opacity": 0.6 }
     },
+
     {
-      "data": {"url": "melb_stops.csv"},
-      "mark": {
-        "type": "circle",
-        "opacity": 0.85,
-        "stroke": "black",
-        "strokeWidth": 0.2
+      "data": {
+        "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australia-states.geojson",
+        "format": { "type": "geojson" }
       },
+      "transform": [
+        { "calculate": "datum.STATE_NAME || datum.name || datum.STATE || datum.ste_name", "as": "stateName" },
+        {
+          "lookup": "stateName",
+          "from": {
+            "data": {
+              "values": [
+                { "state": "New South Wales", "pt_share": 0.156 },
+                { "state": "Victoria", "pt_share": 0.174 },
+                { "state": "Queensland", "pt_share": 0.089 },
+                { "state": "South Australia", "pt_share": 0.102 },
+                { "state": "Western Australia", "pt_share": 0.112 },
+                { "state": "Tasmania", "pt_share": 0.060 },
+                { "state": "Northern Territory", "pt_share": 0.040 },
+                { "state": "Australian Capital Territory", "pt_share": 0.201 }
+              ]
+            },
+            "key": "state",
+            "fields": ["pt_share"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.2 },
       "encoding": {
-        "longitude": {"field": "lon", "type": "quantitative"},
-        "latitude": {"field": "lat", "type": "quantitative"},
-        "size": {
-          "field": "stops",
-          "type": "quantitative",
-          "scale": {"range": [30, 1200]},
-          "legend": {"orient": "right"}
-        },
         "color": {
-          "field": "stops",
+          "field": "pt_share",
           "type": "quantitative",
-          "scale": {"scheme": "blues"}
+          "title": "Share of commuters using PT",
+          "scale": { "scheme": "blues", "domain": [0.03, 0.22] }
         },
         "tooltip": [
-          {"field": "place", "type": "nominal", "title": "Location"},
-          {"field": "stops", "type": "quantitative", "title": "Stops (count)"},
-          {"field": "note", "type": "nominal", "title": "Notes"}
+          { "field": "stateName", "title": "State/Territory" },
+          { "field": "pt_share", "title": "PT share", "type": "quantitative", "format": ".1%" }
         ]
       }
     }
