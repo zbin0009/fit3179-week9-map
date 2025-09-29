@@ -8,7 +8,12 @@
     "legend": { "titleColor": "#0f172a", "labelColor": "#0f172a" }
   },
 
-  "projection": { "type": "equalEarth" },
+  "projection": {
+    "type": "equalEarth",
+    "fit": {
+      "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australia-states.geojson"
+    }
+  },
 
   "layer": [
     {
@@ -22,7 +27,10 @@
         "format": { "type": "geojson" }
       },
       "transform": [
-        { "calculate": "datum.STATE_NAME || datum.name || datum.STATE || datum.ste_name", "as": "stateName" },
+        {
+          "calculate": "datum.properties.STATE_NAME || datum.properties.name || datum.properties.STATE || datum.properties.ste_name",
+          "as": "stateName"
+        },
         {
           "lookup": "stateName",
           "from": {
@@ -46,10 +54,14 @@
       "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1.2 },
       "encoding": {
         "color": {
-          "field": "pt_share",
-          "type": "quantitative",
-          "title": "Share of commuters using PT",
-          "scale": { "scheme": "blues", "domain": [0.03, 0.22] }
+          "condition": {
+            "test": "isValid(datum.pt_share)",
+            "field": "pt_share",
+            "type": "quantitative",
+            "title": "Share of commuters using PT",
+            "scale": { "scheme": "blues", "domain": [0.03, 0.22] }
+          },
+          "value": "#e6edf5"
         },
         "tooltip": [
           { "field": "stateName", "title": "State/Territory" },
@@ -57,5 +69,13 @@
         ]
       }
     }
-  ]
+  ],
+
+  "title": {
+    "text": "Where do Australians Use Public Transport to Get to Work?",
+    "subtitle": "Share of employed commuters by state/territory, ABS Census 2021 (MTWP)",
+    "anchor": "start",
+    "color": "#0f172a",
+    "subtitleColor": "#5b6573"
+  }
 }
