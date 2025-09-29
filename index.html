@@ -3,23 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FIT3179 Week 9 Map – Melbourne PT Accessibility</title>
+  <title>Where do Australians Use Public Transport to Get to Work?</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 24px; }
-    h1 { margin: 0 0 8px; font-size: 22px; }
-    .meta { color:#555; margin-bottom: 16px; }
-    #vis { border: 1px solid #eee; border-radius: 10px; padding: 8px; }
-    .footer { margin-top:16px; color:#777; font-size:12px; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 16px; background:#fff; }
+    h1 { margin: 0; font-size: 26px; line-height: 1.2; }
+    .sub { margin: 4px 0 16px; color:#5b6573; }
+    #vis { border-top: 2px solid #0f172a; padding-top: 8px; }
   </style>
 </head>
 <body>
-  <h1>Public Transport Accessibility in Melbourne</h1>
-  <div class="meta">Base map: Melbourne suburbs • Projection: Mercator (auto-fit) • Symbols: stop counts • Labels: major hubs • Graticule: 2°</div>
+  <h1>Where do Australians Use Public Transport to Get to Work?</h1>
+  <div class="sub">Share of employed commuters by state/territory, ABS Census 2021 (MTWP)</div>
   <div id="vis"></div>
-  <div class="footer">Tip: Hover suburbs or circles for details. Data: mock clusters for Week 9 homework.</div>
 
   <script>
     vegaEmbed("#vis", "map.json", { actions:false })
