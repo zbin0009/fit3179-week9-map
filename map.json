@@ -2,77 +2,61 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Public Transport Accessibility in Melbourne (Stops by Hub, 2025)",
-    "subtitle": "Base map: Melbourne suburbs • Idiom: proportional symbols with labels • Projection: Mercator (auto-fit)",
+    "subtitle": "Base map: Melbourne boundary • Idiom: proportional symbol map • Projection: Mercator",
     "anchor": "start"
   },
   "config": {
     "background": "white",
-    "view": { "stroke": "transparent" },
-    "legend": { "title": "Stops (count)" }
+    "view": {"stroke": "transparent"},
+    "legend": {"title": "Stops (count)"}
   },
-  "projection": { "type": "mercator" },
+  "projection": {
+    "type": "mercator",
+    "center": [145.0, -37.85],
+    "scale": 50000
+  },
   "width": 960,
   "height": 600,
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/melbourne.geojson",
-        "format": { "type": "geojson" }
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/vic-localities.geojson",
+        "format": {"type": "geojson"}
       },
       "mark": {
         "type": "geoshape",
         "fill": "#f0f4f8",
-        "stroke": "#9aa4b2",
-        "strokeWidth": 0.8
+        "stroke": "#666",
+        "strokeWidth": 0.5
       }
     },
     {
-      "data": { "graticule": { "step": [2, 2] } },
-      "mark": { "type": "geoshape", "stroke": "#e3e3e3", "strokeWidth": 0.5 }
-    },
-    {
-      "data": { "url": "melb_stops.csv" },
+      "data": {"url": "melb_stops.csv"},
       "mark": {
         "type": "circle",
-        "opacity": 0.9,
+        "opacity": 0.85,
         "stroke": "black",
-        "strokeWidth": 0.25
+        "strokeWidth": 0.2
       },
       "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
         "size": {
           "field": "stops",
           "type": "quantitative",
-          "scale": { "range": [40, 1600] },
-          "legend": { "orient": "right" }
+          "scale": {"range": [30, 1200]},
+          "legend": {"orient": "right"}
         },
         "color": {
           "field": "stops",
           "type": "quantitative",
-          "scale": { "scheme": "blues" }
+          "scale": {"scheme": "blues"}
         },
         "tooltip": [
-          { "field": "place", "type": "nominal", "title": "Location" },
-          { "field": "stops", "type": "quantitative", "title": "Stops (count)" },
-          { "field": "note", "type": "nominal", "title": "Notes" }
+          {"field": "place", "type": "nominal", "title": "Location"},
+          {"field": "stops", "type": "quantitative", "title": "Stops (count)"},
+          {"field": "note", "type": "nominal", "title": "Notes"}
         ]
-      }
-    },
-    {
-      "data": { "url": "melb_stops.csv" },
-      "transform": [{ "filter": "datum.stops >= 140" }],
-      "mark": {
-        "type": "text",
-        "dy": -10,
-        "fontSize": 12,
-        "fontWeight": "bold"
-      },
-      "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "text": { "field": "place" },
-        "color": { "value": "#334155" }
       }
     }
   ]
