@@ -12,12 +12,14 @@
     "view": { "stroke": "transparent" },
     "legend": { "title": "Stops (count)" }
   },
+
   "projection": {
     "type": "mercator",
     "fit": {
       "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json"
     }
   },
+
   "layer": [
     {
       "data": {
@@ -31,6 +33,7 @@
         "strokeWidth": 0.8
       }
     },
+
     {
       "data": { "url": "melb_stops.csv" },
       "mark": { "type": "circle", "opacity": 0.9, "stroke": "black", "strokeWidth": 0.25 },
@@ -55,6 +58,7 @@
         ]
       }
     },
+
     {
       "data": { "url": "melb_stops.csv" },
       "transform": [{ "filter": "datum.stops >= 140" }],
