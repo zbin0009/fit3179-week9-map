@@ -1,52 +1,37 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Public Transport Accessibility in Melbourne",
-    "subtitle": "Stops and Hubs • Data source: melb_stops.csv",
+    "text": "Public Transport Accessibility in Melbourne (Stops by Hub)",
+    "subtitle": "Base map: Melbourne municipalities • Idiom: proportional symbols • Projection: Mercator (auto-fit)",
     "anchor": "start"
   },
-  "width": 700,
+  "width": 980,
   "height": 600,
+  "config": {
+    "background": "white",
+    "view": { "stroke": "transparent" },
+    "legend": { "title": "Stops (count)" }
+  },
+
   "projection": {
     "type": "mercator",
-    "center": [145.0, -37.8],
-    "scale": 40000
+    "fit": {
+      "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json"
+    }
   },
+
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/australia/australia-states.json",
-        "format": {"type": "topojson", "feature": "australia-states"}
+        "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json",
+        "format": { "type": "geojson" }
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e0e0e0",
-        "stroke": "white"
+        "fill": "#f3f6fa",
+        "stroke": "#94a3b8",
+        "strokeWidth": 0.8
       }
     },
+
     {
-      "data": {"url": "melb_stops.csv"},
-      "mark": {"type": "circle", "tooltip": true},
-      "encoding": {
-        "longitude": {"field": "stop_lon", "type": "quantitative"},
-        "latitude": {"field": "stop_lat", "type": "quantitative"},
-        "size": {
-          "field": "hub_size",
-          "type": "quantitative",
-          "title": "Number of Routes"
-        },
-        "color": {
-          "field": "mode",
-          "type": "nominal",
-          "title": "Transport Mode",
-          "scale": {"scheme": "category10"}
-        },
-        "tooltip": [
-          {"field": "stop_name", "title": "Stop"},
-          {"field": "mode", "title": "Mode"},
-          {"field": "hub_size", "title": "Routes"}
-        ]
-      }
-    }
-  ]
-}
