@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
-    :root { color-scheme: light; }
     body { margin: 0; padding: 20px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
     h1 { margin: 0 0 8px; font-size: 28px; }
     .sub { margin: 0 0 12px; color: #5b6573; }
@@ -21,10 +20,9 @@
   <div class="sub">Stops & hubs • Projection: Mercator (auto-fit) • Base map: Melbourne municipalities • Data: <code>melb_stops.csv</code></div>
 
   <div id="vis"></div>
-  <footer>Tip: hover circles for details. (version: 1)</footer>
+  <footer>Tip: hover circles for details.</footer>
 
   <script>
-    // Load the Vega-Lite spec (same folder)
     vegaEmbed("#vis", "map.json", { actions: false })
       .then(() => console.log("Map loaded"))
       .catch(err => console.error("Map failed:", err));
