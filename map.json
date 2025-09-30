@@ -1,82 +1,75 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Public Transport Accessibility in Melbourne (Stops by Hub)",
-    "subtitle": "Base map: Melbourne suburbs (polygons) • Idiom: proportional symbols • Projection: Mercator (auto-fit to suburbs)",
+    "text": "Public Transport Accessibility – Australia (Melbourne hubs shown)",
+    "subtitle": "Basemap: Natural Earth (Admin-0/1) • Projection: Equal Earth (fit to Australia) • Points: melb_stops.csv",
     "anchor": "start"
   },
-  "width": 980,
+  "width": 1100,
   "height": 600,
   "config": {
     "background": "white",
-    "view": { "stroke": "transparent" },
-    "legend": { "title": "Stops (count)" }
+    "view": {"stroke": "transparent"},
+    "legend": {"title": "Stops (count)"}
   },
 
-  /* Fit to a multi-polygon suburbs GeoJSON so you see regional boundaries */
   "projection": {
-    "type": "mercator",
+    "type": "equalEarth",
     "fit": {
-      "url": "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/melbourne.geojson"
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson"
     }
   },
 
   "layer": [
-    /* 1) Suburb polygons (the “regions”) */
+    /* Graticule for context */
     {
-      "data": {
-        "url": "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/melbourne.geojson",
-        "format": { "type": "geojson" }
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#f3f6fa",
-        "stroke": "#94a3b8",
-        "strokeWidth": 0.8
-      },
-      "encoding": {
-        "tooltip": [
-          { "field": "properties.name", "type": "nominal", "title": "Suburb" }
-        ]
-      }
+      "data": {"graticule": {"step": [20, 20]}},
+      "mark": {"type": "geoshape", "stroke": "#97a9bf", "strokeWidth": 1, "opacity": 0.6}
     },
 
-    /* 2) Your hubs (bubbles) */
+    /* Admin-0: Australia fill */
     {
-      "data": { "url": "melb_stops.csv" },
-      "mark": { "type": "circle", "opacity": 0.9, "stroke": "black", "strokeWidth": 0.25 },
+      "data": {
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson",
+        "format": {"type": "geojson"}
+      },
+      "transform": [{"filter": "datum.properties.adm0_a3 == 'AUS'"}],
+      "mark": {"type": "geoshape", "fill": "#e9f0f7", "stroke": "#9fb0c3", "strokeWidth": 0.6}
+    },
+
+    /* Admin-1: state/province outlines */
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson",
+        "format": {"type": "geojson"}
+      },
+      "transform": [{"filter": "datum.properties.adm0_a3 == 'AUS'"}],
+      "mark": {"type": "geoshape", "fill": null, "stroke": "white", "strokeWidth": 1.2}
+    },
+
+    /* Your hubs (Melbourne points) */
+    {
+      "data": {"url": "melb_stops.csv"},
+      "mark": {"type": "circle", "opacity": 0.9, "stroke": "black", "strokeWidth": 0.25},
       "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude":  { "field": "lat", "type": "quantitative" },
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude":  {"field": "lat", "type": "quantitative"},
         "size": {
           "field": "stops",
           "type": "quantitative",
-          "scale": { "range": [40, 1600] },
-          "legend": { "orient": "right" }
+          "scale": {"range": [30, 900]},
+          "legend": {"orient": "right"}
         },
         "color": {
           "field": "stops",
           "type": "quantitative",
-          "scale": { "scheme": "blues" }
+          "scale": {"scheme": "blues"}
         },
         "tooltip": [
-          { "field": "place", "type": "nominal", "title": "Hub" },
-          { "field": "stops", "type": "quantitative", "title": "Stops (count)" },
-          { "field": "note",  "type": "nominal", "title": "Notes" }
+          {"field": "place", "title": "Hub"},
+          {"field": "stops", "type": "quantitative", "title": "Stops (count)"},
+          {"field": "note",  "title": "Notes"}
         ]
-      }
-    },
-
-    /* 3) Labels for the larger hubs */
-    {
-      "data": { "url": "melb_stops.csv" },
-      "transform": [{ "filter": "toNumber(datum.stops) >= 140" }],
-      "mark": { "type": "text", "dy": -10, "fontSize": 12, "fontWeight": "bold" },
-      "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude":  { "field": "lat", "type": "quantitative" },
-        "text": { "field": "place" },
-        "color": { "value": "#334155" }
       }
     }
   ]
