@@ -20,10 +20,11 @@
   <div class="sub">Stops & hubs • Projection: Mercator (auto-fit) • Base map: Melbourne municipalities • Data: <code>melb_stops.csv</code></div>
 
   <div id="vis"></div>
-  <footer>Tip: hover circles for details.</footer>
+  <footer>Tip: hover circles for details. (build v=mel-1)</footer>
 
   <script>
-    vegaEmbed("#vis", "map.json", { actions: false })
+    // force cache-bust by appending a version query param
+    vegaEmbed("#vis", "map.json?v=mel-1", { actions: false })
       .then(() => console.log("Map loaded"))
       .catch(err => console.error("Map failed:", err));
   </script>
