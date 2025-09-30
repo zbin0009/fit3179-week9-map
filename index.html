@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Where do Australians Use Public Transport to Get to Work?</title>
+  <meta charset="UTF-8">
+  <title>Melbourne Public Transport Map</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 16px; background:#fff; }
-    h1 { margin: 0; font-size: 26px; line-height: 1.2; }
-    .sub { margin: 4px 0 16px; color:#5b6573; }
-    #vis { border-top: 2px solid #0f172a; padding-top: 8px; }
-  </style>
 </head>
 <body>
-  <h1>Where do Australians Use Public Transport to Get to Work?</h1>
-  <div class="sub">Share of employed commuters by state/territory, ABS Census 2021 (MTWP)</div>
+  <h1>Public Transport Accessibility in Melbourne</h1>
   <div id="vis"></div>
 
-  <script>
-    vegaEmbed("#vis", "map.json", { actions:false })
-      .then(() => console.log("Map loaded"))
-      .catch(console.error);
+  <script type="text/javascript">
+    vegaEmbed('#vis', 'map.json').then(function(result) {
+      // Map rendered
+    }).catch(console.error);
   </script>
 </body>
 </html>
