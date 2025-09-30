@@ -15,8 +15,8 @@
 
   "projection": {
     "type": "mercator",
-    "center": [144.9631, -37.8136],         // Melbourne CBD
-    "scale": 60000                           // zoom level; tweak 55k–70k if needed
+    "center": [144.9631, -37.8136],         
+    "scale": 60000                           
   },
 
   "layer": [
