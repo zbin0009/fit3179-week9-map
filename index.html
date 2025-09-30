@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Melbourne Public Transport Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Public Transport Accessibility in Melbourne</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; padding: 20px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    .sub { margin: 0 0 12px; color: #5b6573; }
+    #vis { border-top: 2px solid #0f172a; padding-top: 8px; }
+    footer { margin-top: 8px; font-size: 12px; color: #6b7280; }
+  </style>
 </head>
 <body>
   <h1>Public Transport Accessibility in Melbourne</h1>
-  <div id="vis"></div>
+  <div class="sub">Stops & hubs • Projection: Mercator (auto-fit) • Base map: Melbourne municipalities • Data: <code>melb_stops.csv</code></div>
 
-  <script type="text/javascript">
-    vegaEmbed('#vis', 'map.json').then(function(result) {
-      // Map rendered
-    }).catch(console.error);
+  <div id="vis"></div>
+  <footer>Tip: hover circles for details. (version: 1)</footer>
+
+  <script>
+    // Load the Vega-Lite spec (same folder)
+    vegaEmbed("#vis", "map.json", { actions: false })
+      .then(() => console.log("Map loaded"))
+      .catch(err => console.error("Map failed:", err));
   </script>
 </body>
 </html>
