@@ -17,14 +17,14 @@
 </head>
 <body>
   <h1>Public Transport Accessibility in Melbourne</h1>
-  <div class="sub">Stops & hubs • Projection: Mercator (auto-fit) • Base map: Melbourne municipalities • Data: <code>melb_stops.csv</code></div>
+  <div class="sub">Stops & hubs • Projection: Mercator (centered on Melbourne) • Base map: Melbourne suburbs • Data: <code>melb_stops.csv</code></div>
 
   <div id="vis"></div>
-  <footer>Tip: hover circles for details. (build v=mel-1)</footer>
+  <footer>Tip: hover circles for details. (build v=mel-cs-2)</footer>
 
   <script>
-    // force cache-bust by appending a version query param
-    vegaEmbed("#vis", "map.json?v=mel-1", { actions: false })
+    // add a cache-buster so the latest spec is fetched
+    vegaEmbed("#vis", "map.json?v=mel-cs-2", { actions: false })
       .then(() => console.log("Map loaded"))
       .catch(err => console.error("Map failed:", err));
   </script>
