@@ -1,5 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where do Australians Use Public Transport to Get to Work?",
+    "subtitle": "Share of employed commuters by state/territory, ABS Census 2021 (MTWP)",
+    "anchor": "start",
+    "color": "#0f172a",
+    "subtitleColor": "#5b6573"
+  },
   "width": 1100,
   "height": 520,
   "config": {
@@ -11,7 +18,7 @@
   "projection": {
     "type": "equalEarth",
     "fit": {
-      "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australia-states.geojson"
+      "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson"
     }
   },
 
@@ -23,7 +30,7 @@
 
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australia-states.geojson",
+        "url": "https://raw.githubusercontent.com/rowanhogan/australian-states/master/states.geojson",
         "format": { "type": "geojson" }
       },
       "transform": [
@@ -69,13 +76,5 @@
         ]
       }
     }
-  ],
-
-  "title": {
-    "text": "Where do Australians Use Public Transport to Get to Work?",
-    "subtitle": "Share of employed commuters by state/territory, ABS Census 2021 (MTWP)",
-    "anchor": "start",
-    "color": "#0f172a",
-    "subtitleColor": "#5b6573"
-  }
+  ]
 }
