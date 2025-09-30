@@ -63,4 +63,11 @@
       "transform": [{ "filter": "toNumber(datum.stops) >= 140" }],
       "mark": { "type": "text", "dy": -10, "fontSize": 12, "fontWeight": "bold" },
       "encoding": {
-        "longitude": { "field": "lon", "type": "
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude":  { "field": "lat", "type": "quantitative" },
+        "text": { "field": "place" },
+        "color": { "value": "#334155" }
+      }
+    }
+  ]
+}
