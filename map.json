@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Public Transport Accessibility in Melbourne (Stops by Hub)",
-    "subtitle": "Base map: Melbourne municipalities • Idiom: proportional symbols • Projection: Mercator (auto-fit)",
+    "subtitle": "Base map: Melbourne suburbs • Idiom: proportional symbols • Projection: Mercator (centered + scaled)",
     "anchor": "start"
   },
   "width": 980,
@@ -15,15 +15,14 @@
 
   "projection": {
     "type": "mercator",
-    "fit": {
-      "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json"
-    }
+    "center": [144.9631, -37.8136],         // Melbourne CBD
+    "scale": 60000                           // zoom level; tweak 55k–70k if needed
   },
 
   "layer": [
     {
       "data": {
-        "url": "https://raw.githubusercontent.com/justinelliotmeyers/australian-geojson/master/vic_melbourne_municipalities.json",
+        "url": "https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/melbourne.geojson",
         "format": { "type": "geojson" }
       },
       "mark": {
@@ -54,21 +53,14 @@
         "tooltip": [
           { "field": "place", "type": "nominal", "title": "Hub" },
           { "field": "stops", "type": "quantitative", "title": "Stops (count)" },
-          { "field": "note", "type": "nominal", "title": "Notes" }
+          { "field": "note",  "type": "nominal", "title": "Notes" }
         ]
       }
     },
 
     {
       "data": { "url": "melb_stops.csv" },
-      "transform": [{ "filter": "datum.stops >= 140" }],
+      "transform": [{ "filter": "toNumber(datum.stops) >= 140" }],
       "mark": { "type": "text", "dy": -10, "fontSize": 12, "fontWeight": "bold" },
       "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude":  { "field": "lat", "type": "quantitative" },
-        "text": { "field": "place" },
-        "color": { "value": "#334155" }
-      }
-    }
-  ]
-}
+        "longitude": { "field": "lon", "type": "
